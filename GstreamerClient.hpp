@@ -3,6 +3,6 @@
 
 #include <string>
 
-void createGstreamerClient (std::string monitorSource, std::string host, int port);
+void createGstreamerClient (std::string monitorSource, std::string host, int aport, int vport);
 
 #endif
