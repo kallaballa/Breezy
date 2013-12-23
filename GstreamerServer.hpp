@@ -3,6 +3,6 @@
 
 #include <string>
 
-void createGstreamerServer (int aport, int vport);
+void createGstreamerServer (int port);
 
 #endif

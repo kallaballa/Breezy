@@ -10,8 +10,7 @@ void printUsage() {
 
 int main(int argc, char *argv[]) {
 	int c;
-	int aport=11111;
-	int vport=11112;
+	int port=11111;
 
 	bool daemon = false;
     while ((c = getopt(argc, argv, "dp:")) != -1) {
@@ -19,11 +18,8 @@ int main(int argc, char *argv[]) {
       case 'd':
     	daemon = true;
         break;
-      case 'a':
-    	aport = atoi(optarg);
-        break;
-      case 'v':
-    	vport = atoi(optarg);
+      case 'p':
+    	port = atoi(optarg);
         break;
       case 'h':
         printUsage();
@@ -38,7 +34,7 @@ int main(int argc, char *argv[]) {
     }
 
     if(daemon) {
-    	createGstreamerServer(aport, vport);
+    	createGstreamerServer(port);
     } else {
 		if ((argc - optind) == 1) {
 			std::string host = argv[optind];
@@ -49,7 +45,7 @@ int main(int argc, char *argv[]) {
 					std::cout << m << std::endl;
 				}
 
-				createGstreamerClient(monitors[0], host, aport,vport);
+				createGstreamerClient(monitors[0], host, port);
 				return 0;
 			} else {
 				return 1;
