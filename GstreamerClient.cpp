@@ -34,7 +34,7 @@ void createGstreamerClient (std::string monitorSource, std::string host, int por
    * program you would probably not use gst_bus_poll(), but rather set up an
    * async signal watch on the bus and run a main loop and connect to the
    * bus's signals to catch certain messages or all messages */
-  msg = gst_bus_poll (bus, GST_MESSAGE_EOS, -1);
+  msg = gst_bus_poll (bus, GST_MESSAGE_ERROR, -1);
 
   switch (GST_MESSAGE_TYPE (msg)) {
     case GST_MESSAGE_EOS: {
@@ -56,8 +56,8 @@ void createGstreamerClient (std::string monitorSource, std::string host, int por
       }
     }
   }
-  gst_message_unref (msg);
 
+  gst_message_unref (msg);
   gst_element_set_state (pipeline, GST_STATE_NULL);
   gst_object_unref (pipeline);
   gst_object_unref (bus);
