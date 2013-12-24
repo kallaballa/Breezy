@@ -96,6 +96,7 @@ static void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig
 }
 
 std::vector<string> getPulseMonitorSource() {
+	monitorSources.clear();
     pa_mainloop *m = NULL;
     int ret = 1, c;
     char *server = NULL, *bn;
