@@ -1,12 +1,12 @@
-CXX     := g++-4.8
+CXX     := g++
 TARGET  := breezy
 SRCS    := breezy.cpp PulseMonitorSource.cpp  GstreamerClient.cpp GstreamerServer.cpp
 OBJS    := ${SRCS:.cpp=.o} 
 DEPS    := ${SRCS:.cpp=.dep} 
     
-CXXFLAGS = -pedantic -std=c++11 -g -O0 `pkg-config --cflags gstreamer-0.10`
+CXXFLAGS = -pedantic -std=c++11 `pkg-config --cflags libpulse` `pkg-config --cflags gstreamer-0.10`
 LDFLAGS = 
-LIBS    = -lpulse `pkg-config --libs gstreamer-0.10`
+LIBS    =  `pkg-config --libs libpulse` `pkg-config --libs gstreamer-0.10`
 
 .PHONY: all clean
 
@@ -15,6 +15,9 @@ ifeq ($(UNAME), Darwin)
 endif
 
 all: release
+
+debug: CXXFLAGS+=-g -O0
+debug: ${TARGET}
 
 release: ${TARGET}
 
