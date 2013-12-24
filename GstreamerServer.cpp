@@ -23,7 +23,7 @@ void createGstreamerServer (int port) {
           NULL);
 
   gst_init (0, NULL);
-  gst_debug_set_default_threshold(GST_LEVEL_INFO);
+  //gst_debug_set_default_threshold(GST_LEVEL_INFO);
   //pulsesrc name=psrc
   pipeline = gst_parse_launch ("udpsrc name=udpsrc ! rtpvorbisdepay ! vorbisdec ! autoaudiosink", &error);
   if (!pipeline) {
