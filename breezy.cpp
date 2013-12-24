@@ -10,32 +10,32 @@ void printUsage() {
 
 int main(int argc, char *argv[]) {
 	int c;
-	int port=11111;
+	int port = 11111;
 
 	bool daemon = false;
-    while ((c = getopt(argc, argv, "dp:")) != -1) {
-      switch (c) {
-      case 'd':
-    	daemon = true;
-        break;
-      case 'p':
-    	port = atoi(optarg);
-        break;
-      case 'h':
-        printUsage();
-        break;
-      case ':':
-        printUsage();
-        break;
-      case '?':
-        printUsage();
-        break;
-      }
-    }
+	while ((c = getopt(argc, argv, "dp:")) != -1) {
+		switch (c) {
+		case 'd':
+			daemon = true;
+			break;
+		case 'p':
+			port = atoi(optarg);
+			break;
+		case 'h':
+			printUsage();
+			break;
+		case ':':
+			printUsage();
+			break;
+		case '?':
+			printUsage();
+			break;
+		}
+	}
 
-    if(daemon) {
-    	createGstreamerServer(port);
-    } else {
+	if (daemon) {
+		createGstreamerServer(port);
+	} else {
 		if ((argc - optind) == 1) {
 			std::string host = argv[optind];
 			auto monitors = getPulseMonitorSource();
@@ -54,5 +54,5 @@ int main(int argc, char *argv[]) {
 			std::cerr << "missing hostname" << std::endl;
 			printUsage();
 		}
-    }
+	}
 }
