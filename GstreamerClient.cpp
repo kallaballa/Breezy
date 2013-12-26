@@ -1,23 +1,21 @@
 #include <gst/gst.h>
 #include <iostream>
+#include <vector>
 #include "GstreamerClient.hpp"
 
-void createGstreamerClient(std::string monitorSource, std::string host,
-		int port) {
+void createGstreamerClient(std::string monitorSource, std::vector<std::string> targets) {
+	int defaultPort=11111;
 	GstElement *pipeline;
 	GstElement *pulsesrc;
-	GstElement *udpsink;
+	GstElement *mudpsink;
 	GstMessage *msg;
 	GstBus *bus;
 	GError *error = NULL;
 
 	gst_init(0, NULL);
 
-	//pulsesrc name=psrc
-	pipeline =
-			gst_parse_launch(
-					"pulsesrc name=psrc ! vorbisenc ! rtpvorbispay ! udpsink name=udpsink",
-					&error);
+	pipeline = gst_parse_launch("pulsesrc name=psrc ! vorbisenc ! rtpvorbispay ! multiudpsink name=mudpsink", &error);
+
 	if (!pipeline) {
 		std::cerr << "Parse error: " << error->message << std::endl;
 		return;
@@ -25,9 +23,24 @@ void createGstreamerClient(std::string monitorSource, std::string host,
 
 	pulsesrc = gst_bin_get_by_name(GST_BIN(pipeline), "psrc");
 	g_object_set(pulsesrc, "device", monitorSource.c_str(), NULL);
-	udpsink = gst_bin_get_by_name(GST_BIN(pipeline), "udpsink");
-	g_object_set(udpsink, "host", host.c_str(), NULL);
-	g_object_set(udpsink, "port", port, NULL);
+	mudpsink = gst_bin_get_by_name(GST_BIN(pipeline), "mudpsink");
+
+	std::string clients;
+	bool first = true;
+
+	for(auto target : targets) {
+		if(!first)
+			clients += ",";
+
+		if(target.find(":") == std::string::npos)
+			clients += target + ":" + std::to_string(defaultPort);
+		else
+			clients += target;
+
+		first = false;
+	}
+
+	g_object_set(mudpsink, "clients", clients.c_str(), NULL);
 
 	gst_element_set_state(pipeline, GST_STATE_PLAYING);
 	std::cerr << "Pipeline playing" << std::endl;
@@ -66,4 +79,3 @@ void createGstreamerClient(std::string monitorSource, std::string host,
 	gst_object_unref(pipeline);
 	gst_object_unref(bus);
 }
-
