@@ -4,8 +4,13 @@ License: GPLv3
 Group: Productivity/Multimedia/Sound/Utilities 
 Name: breezy
 Prefix: /usr 
+%if %{defined fedora_version}
+BuildRequires: gcc-c++ pulseaudio-libs-devel gstreamer-devel
+Requires: pulseaudio-libs gstreamer gstreamer-plugins-good gstreamer-plugins-base
+%else
 BuildRequires: gcc-c++ libpulse-devel gstreamer-0_10-devel
 Requires: libpulse0 libgstreamer-0_10-0 gstreamer-plugins-good gstreamer-plugins-base
+%endif
 Release: 1 
 Source: breezy-%{version}.tar.gz 
 URL: http://ibm.com/developerworks/opensource/jikes 
