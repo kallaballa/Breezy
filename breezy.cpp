@@ -3,56 +3,82 @@
 #include "GstreamerServer.hpp"
 #include <iostream>
 #include <getopt.h>
+#include <gst/gst.h>
 
 void printUsage() {
-	std::cerr << "Usage: breezy [-d] <host>" << std::endl;
+	std::cerr << "Usage: breezy [-d][-v][-p <daemonPort>][-m <index>] <target>..." << std::endl;
+	std::cerr << "Options:" << std::endl;
+	std::cerr << "\t-d\t\tstart the breezy daemon" << std::endl;
+	std::cerr << "\t-v\t\tgenerate verbose output" << std::endl;
+	std::cerr << "\t-p <port>\tport to listen/connect to" << std::endl;
+	std::cerr << "\t-m <index>\tindex of the monitor source" << std::endl;
 }
 
 int main(int argc, char *argv[]) {
 	int c;
-	int port = 11111;
-
+	int daemonPort = 11111;
+	int monitorSourceIndex = 0;
+	bool verbose = false;
 	bool daemon = false;
-	while ((c = getopt(argc, argv, "dp:")) != -1) {
+
+	while ((c = getopt(argc, argv, "dvh?p:m:")) != -1) {
 		switch (c) {
 		case 'd':
 			daemon = true;
 			break;
+		case 'v':
+			verbose = true;
+			break;
 		case 'p':
-			port = atoi(optarg);
+			daemonPort = atoi(optarg);
+			break;
+		case 'm':
+			monitorSourceIndex = atoi(optarg);
 			break;
 		case 'h':
 			printUsage();
+			return 1;
 			break;
 		case ':':
 			printUsage();
+			return 1;
 			break;
 		case '?':
 			printUsage();
+			return 1;
 			break;
 		}
 	}
 
+	if (verbose)
+		gst_debug_set_default_threshold(GST_LEVEL_INFO);
+	else
+		gst_debug_set_default_threshold(GST_LEVEL_WARNING);
+
 	if (daemon) {
-		createGstreamerServer(port);
+		createGstreamerServer(daemonPort);
 	} else {
-		if ((argc - optind) == 1) {
-			std::string host = argv[optind];
-			auto monitors = getPulseMonitorSource();
+		std::vector<std::string> targets;
 
-			if (monitors.size() > 0) {
-				for (auto m : monitors) {
-					std::cout << m << std::endl;
-				}
+		for(int i=optind; i < argc; ++i) {
+			targets.push_back(std::string(argv[i]));
+		}
 
-				createGstreamerClient(monitors[0], host, port);
-				return 0;
-			} else {
-				return 1;
-			}
-		} else {
-			std::cerr << "missing hostname" << std::endl;
+		if(targets.empty()) {
+			std::cerr << "missing targets" << std::endl;
 			printUsage();
+			return 1;
+		}
+
+		auto monitors = getPulseMonitorSource();
+
+		if (monitors.size() > 0) {
+			std::cerr << "Selected monitor source: " << monitors[monitorSourceIndex] << std::endl;
+			createGstreamerClient(monitors[monitorSourceIndex], targets);
+			return 0;
+		} else {
+			std::cerr << "Monitor source not found" << std::endl;
+			return 1;
 		}
 	}
 }
