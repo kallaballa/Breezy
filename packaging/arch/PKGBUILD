@@ -1,0 +1,44 @@
+# Maintainer: Amir Hassan <amir@viel-zu.org>
+pkgname=breezy
+pkgver=1.0
+pkgrel=1
+epoch=
+pkgdesc="Breezy is a simple audio streaming tool"
+arch=()
+url="http://github.com/kallaballa/Breezy"
+license=('GPLv3')
+groups=()
+depends=()
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("$pkgname-$pkgver.tar.gz")
+noextract=()
+md5sums=() #generate with 'makepkg -g'
+
+prepare() {
+	cd "$pkgname-$pkgver"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	make
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+	make -k check
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	make DESTDIR="$pkgdir/" install
+}
+
