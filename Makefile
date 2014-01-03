@@ -32,9 +32,11 @@ ${OBJS}: %.o: %.cpp %.dep
 ${DEPS}: %.dep: %.cpp Makefile 
 	${CXX} ${CXXFLAGS} -MM $< > $@ 
 
+install: ${TARGET}
 install:
 	mkdir -p ${DESTDIR}/${PREFIX}
 	cp ${TARGET} ${DESTDIR}/${PREFIX}
+
 clean:
 	rm -f *~ *.dep *.o ${TARGET} 
 

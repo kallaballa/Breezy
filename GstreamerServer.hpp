@@ -3,6 +3,6 @@
 
 #include <string>
 
-void createGstreamerServer(int port);
+void createGstreamerServer(int port, bool raw=false);
 
 #endif

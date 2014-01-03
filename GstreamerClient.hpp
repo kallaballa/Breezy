@@ -3,6 +3,6 @@
 
 #include <string>
 
-void createGstreamerClient(std::string monitorSource, std::vector<std::string> targets);
+void createGstreamerClient(std::string monitorSource, std::vector<std::string> targets, bool raw=false);
 
 #endif
