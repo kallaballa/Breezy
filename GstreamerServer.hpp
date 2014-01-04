@@ -3,6 +3,8 @@
 
 #include <string>
 
+namespace breezy {
 void createGstreamerServer(int port, bool raw=false);
+}
 
 #endif

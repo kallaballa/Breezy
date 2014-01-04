@@ -54,6 +54,7 @@ int main(int argc, char *argv[]) {
 			break;
 		}
 	}
+	using namespace breezy;
 
 	if (verbose)
 		gst_debug_set_default_threshold(GST_LEVEL_INFO);
@@ -77,7 +78,7 @@ int main(int argc, char *argv[]) {
 
 		auto monitors = getPulseMonitorSource();
 
-		if (monitors.size() > 0) {
+		if (monitors.size() > monitorSourceIndex) {
 			std::cerr << "Selected monitor source: " << monitors[monitorSourceIndex] << std::endl;
 			createGstreamerClient(monitors[monitorSourceIndex], targets, raw);
 			return 0;

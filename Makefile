@@ -1,6 +1,6 @@
 CXX     := g++
 TARGET  := breezy
-SRCS    := breezy.cpp PulseMonitorSource.cpp  GstreamerClient.cpp GstreamerServer.cpp
+SRCS    := breezy.cpp PulseMonitorSource.cpp  GstreamerClient.cpp GstreamerServer.cpp Caps.cpp
 OBJS    := ${SRCS:.cpp=.o} 
 DEPS    := ${SRCS:.cpp=.dep} 
 PREFIX  := /usr/bin/
