@@ -8,6 +8,6 @@ Homepage: http://github.com/kallaballa/Breezy
 
 Package: breezy
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libgstreamer0.10-0, gstreamer0.10-plugins-base, gstreamer0.10-plugins-good, libpulse0
+Depends: ${shlibs:Depends}, ${misc:Depends}, libgstreamer0.10-0, gstreamer0.10-plugins-base, gstreamer0.10-plugins-bad, gstreamer0.10-plugins-good, libpulse0
 Description: Simple audio streaming tool
  Stream local audio to remote machines
