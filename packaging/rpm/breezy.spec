@@ -6,13 +6,13 @@ Name: breezy
 Prefix: /usr 
 %if %{defined fedora_version}
 BuildRequires: gcc-c++ pulseaudio-libs-devel gstreamer-devel
-Requires: pulseaudio-libs gstreamer gstreamer-plugins-good gstreamer-plugins-base
+Requires: pulseaudio-libs gstreamer gstreamer-plugins-bad gstreamer-plugins-good gstreamer-plugins-base
 %else
 BuildRequires: gcc-c++ libpulse-devel gstreamer-0_10-devel
-Requires: libpulse0 libgstreamer-0_10-0 gstreamer-plugins-good gstreamer-plugins-base
+Requires: libpulse0 libgstreamer-0_10-0 gstreamer-0_10-plugins-bad gstreamer-0_10-plugins-good gstreamer-0_10-plugins-base
 %endif
 Release: 1 
-Source: breezy-%{version}.tar.gz 
+Source: breezy-%{version}.tar.bz2
 URL: http://ibm.com/developerworks/opensource/jikes 
 Version: %{version} 
 Buildroot: /tmp/breezyrpm 
