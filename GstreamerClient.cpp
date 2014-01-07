@@ -31,7 +31,6 @@ GstreamerPipeline* makeL16Pipeline(std::string monitorSource, std::string client
 }
 
 void createGstreamerClient(std::string pulseSource, std::vector<std::string> targets, bool raw) {
-	gst_init(0, NULL);
 	int defaultPort=11111;
 
 	std::string clients;

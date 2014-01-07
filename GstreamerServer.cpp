@@ -33,7 +33,6 @@ GstreamerPipeline* makeL16Pipeline(int port) {
 }
 
 void createGstreamerServer(int port, bool raw) {
-	gst_init(0, NULL);
 	using std::string;
 	GstreamerPipeline *pipeline;
 

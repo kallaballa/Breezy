@@ -16,6 +16,7 @@ void printUsage() {
 }
 
 int main(int argc, char *argv[]) {
+	gst_init(0, NULL);
 	int c;
 	int daemonPort = 11111;
 	int monitorSourceIndex = 0;
