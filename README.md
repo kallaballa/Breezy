@@ -17,7 +17,7 @@ Packages for following distributions are available from [here](https://software.
     
     # install build dependencies
     apt-get update
-    apt-get install libpulse-dev libgstreamer0.10-dev
+    apt-get install libpulse-dev libgstreamer0.10-dev gstreamer0.10-alsa gstreamer0.10-plugins-base gstreamer0.10-plugins-bad gstreamer0.10-plugins-good
     
     # build
     make
