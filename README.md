@@ -4,6 +4,7 @@
     cd Breezy
     
     # install build dependencies
+    apt-get update
     apt-get install libpulse-dev libgstreamer-0.10-dev
     
     # build
